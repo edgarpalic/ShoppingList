@@ -1,21 +1,17 @@
-package com.example.shoppinglist;
+package com.example.edgarsshoppinglist;
 
 import android.os.Parcel;
 import android.os.Parcelable;
 
 public class ListItem implements Parcelable {
+    final String item;
 
-    String item;
-    Boolean isChecked = false;
-
-    public ListItem(String item){
+    ListItem(String item){
         this.item = item;
     }
 
-    protected ListItem(Parcel in) {
+    private ListItem(Parcel in) {
         item = in.readString();
-        byte tmpIsChecked = in.readByte();
-        isChecked = tmpIsChecked == 0 ? null : tmpIsChecked == 1;
     }
 
     public static final Creator<ListItem> CREATOR = new Creator<ListItem>() {
@@ -31,13 +27,12 @@ public class ListItem implements Parcelable {
     };
 
     @Override
-    public int describeContents(){
+    public int describeContents() {
         return 0;
     }
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(item);
-        dest.writeByte((byte) (isChecked == null ? 0 : isChecked ? 1 : 2));
     }
 }
