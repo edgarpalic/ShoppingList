@@ -1,6 +1,7 @@
 package com.example.edgarsshoppinglist;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -14,6 +15,8 @@ import java.util.ArrayList;
 public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ShoppingItemViewHolder> {
     private final ArrayList<ListItem> arrayList;
     private final LayoutInflater mInflater;
+    SharedPreferences prefs;
+    SharedPreferences.Editor editor;
 
 
     ListAdapter(Context context, ArrayList<ListItem> shoppingItemList){

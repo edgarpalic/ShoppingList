@@ -18,6 +18,7 @@
                 android:value="com.example.edgarsshoppinglist.MainActivity">
             </meta-data>
         </activity>
+
         <activity
             android:name="com.example.edgarsshoppinglist.MainActivity"
             android:label="Edgars Shopping Lista"
