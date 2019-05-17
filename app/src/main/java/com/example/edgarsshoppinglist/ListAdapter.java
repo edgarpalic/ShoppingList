@@ -1,7 +1,6 @@
 package com.example.edgarsshoppinglist;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -15,8 +14,6 @@ import java.util.ArrayList;
 public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ShoppingItemViewHolder> {
     private final ArrayList<ListItem> arrayList;
     private final LayoutInflater mInflater;
-    SharedPreferences prefs;
-    SharedPreferences.Editor editor;
 
 
     ListAdapter(Context context, ArrayList<ListItem> shoppingItemList){
@@ -34,7 +31,11 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ShoppingItemVi
     @Override
     public void onBindViewHolder(@NonNull ListAdapter.ShoppingItemViewHolder holder, int position) {
         String mCurrent = arrayList.get(position).item;
+        Boolean mIsChecked = arrayList.get(position).isChecked;
         holder.shoppingItem.setText(mCurrent);
+        if(mIsChecked){
+            holder.shoppingItem.setBackgroundColor(Color.parseColor("#B83E09"));
+        }
     }
 
     @Override
@@ -60,14 +61,18 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ShoppingItemVi
         @Override
         public void onClick(View v) {
 
+            int mPosition = getLayoutPosition();
             if(!isChecked){
                 shoppingItem.setBackgroundColor(Color.parseColor("#B83E09"));
+                arrayList.get(mPosition).isChecked = true;
+                notifyDataSetChanged();
                 isChecked = true;
             }else{
                 shoppingItem.setBackgroundColor(Color.parseColor("#8BC34A"));
+                arrayList.get(mPosition).isChecked = false;
+                notifyDataSetChanged();
                 isChecked = false;
             }
-
         }
     }
 }

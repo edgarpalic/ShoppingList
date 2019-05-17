@@ -39,6 +39,8 @@ public class MainActivity extends AppCompatActivity {
         }else{
             arrayList = new ArrayList<>();
             load();
+            //arrayList.clear();
+            //save();
         }
         setContentView(R.layout.activity_main);
         mRecyclerView = findViewById(R.id.recyclerView);
@@ -66,11 +68,19 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        String item = data.getStringExtra("Item");
-        arrayList.add(new ListItem(item));
-        recycleSetup();
-        mRecyclerView.getAdapter().notifyItemInserted(arrayList.size());
+        if(resultCode == RESULT_OK) {
+            super.onActivityResult(requestCode, resultCode, data);
+            String item = data.getStringExtra("Item");
+            arrayList.add(new ListItem(item, false));
+            recycleSetup();
+            mRecyclerView.getAdapter().notifyItemInserted(arrayList.size());
+            save();
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
         save();
     }
 
