@@ -7,6 +7,7 @@ public class ListItem implements Parcelable {
     final String item;
     public Boolean isChecked;
 
+    //Our item has a name and a UI selection boolean so that you can check items on the list instead of removing them with the left swipe.
     ListItem(String item, Boolean isChecked){
         this.item = item;
         this.isChecked = isChecked;

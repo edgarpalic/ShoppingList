@@ -11,10 +11,9 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ShoppingItemViewHolder> {
+public class ListAdapter extends RecyclerView.Adapter<ListAdapter.itemViewHolder> {
     private final ArrayList<ListItem> arrayList;
     private final LayoutInflater mInflater;
-
 
     ListAdapter(Context context, ArrayList<ListItem> shoppingItemList){
         mInflater = LayoutInflater.from(context);
@@ -23,13 +22,13 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ShoppingItemVi
 
     @NonNull
     @Override
-    public ListAdapter.ShoppingItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public itemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View mItemView = mInflater.inflate(R.layout.shoppinlist_item, parent, false);
-        return new ShoppingItemViewHolder(mItemView);
+        return new itemViewHolder(mItemView);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ListAdapter.ShoppingItemViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull itemViewHolder holder, int position) {
         String mCurrent = arrayList.get(position).item;
         Boolean mIsChecked = arrayList.get(position).isChecked;
         holder.shoppingItem.setText(mCurrent);
@@ -48,16 +47,17 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ShoppingItemVi
         notifyDataSetChanged();
     }
 
-    class ShoppingItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    class itemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         private final TextView shoppingItem;
         private boolean isChecked;
 
-        private ShoppingItemViewHolder(View itemView) {
+        private itemViewHolder(View itemView) {
             super(itemView);
             shoppingItem = itemView.findViewById(R.id.textViewItem);
             itemView.setOnClickListener(this);
         }
 
+        //Clicking on an array item activates our isChecked boolean.
         @Override
         public void onClick(View v) {
 

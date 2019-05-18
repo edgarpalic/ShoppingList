@@ -7,6 +7,9 @@ import android.view.View;
 import android.widget.EditText;
 
 public class AddItems extends AppCompatActivity {
+
+    //It's a simple shopping list, only need a single string per item. KISS
+
     private EditText item;
 
     @Override

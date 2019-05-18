@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
         }else{
             arrayList = new ArrayList<>();
             load();
-            //arrayList.clear();
+            //arrayList.clear(); //uncomment these two to create a clean json (if app crashes on start)
             //save();
         }
         setContentView(R.layout.activity_main);
@@ -60,12 +60,15 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    //save our view
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
             outState.putParcelableArrayList("Array", arrayList);
     }
 
+    //When we have new data to save/update like adding a new item to the shopping list.
+    //The if statement is needed to prevent a crash caused by backing out of the item adding page with the help of the phone's back button.
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(resultCode == RESULT_OK) {
@@ -78,12 +81,14 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    //saves your choices when you leave the app temporarily.
     @Override
     protected void onPause() {
         super.onPause();
         save();
     }
 
+    //json save method
     private void save(){
         String filename = "SaveData.json";
         FileOutputStream outputStream;
@@ -98,6 +103,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    //json load method
     private void load(){
         String filename = "SaveData.json";
         FileInputStream inputStream;
@@ -108,12 +114,12 @@ public class MainActivity extends AppCompatActivity {
             Type collectionType = new TypeToken<ArrayList<ListItem>>(){}.getType();
             arrayList = gson.fromJson(reader, collectionType);
             reader.close();
-            Log.d("Data laddat:", "" + arrayList);
         }catch (Exception e){
             Log.e("Can´t load data", "", e);
         }
     }
 
+    //the method which calls the abstract class that handles swipe removal of list items.
     private void remove(){
         SwipeRemoval swipeRemoval = new SwipeRemoval() {
             @Override
@@ -127,6 +133,7 @@ public class MainActivity extends AppCompatActivity {
         itemTouchHelper.attachToRecyclerView(mRecyclerView);
     }
 
+    //setting up the recycler view
     private void recycleSetup(){
         mRecyclerView = findViewById(R.id.recyclerView);
         mAdapter = new ListAdapter(this, arrayList);
